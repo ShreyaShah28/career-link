@@ -1,3 +1,37 @@
+
+
+<script setup>
+import { computed } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import { useJobsStore } from '@/stores/jobs'
+import { useApplicationsStore } from '@/stores/applications'
+import Sidebar from '@/components/common/Sidebar.vue'
+
+const authStore = useAuthStore()
+const jobsStore = useJobsStore()
+const applicationsStore = useApplicationsStore()
+
+const myJobs = computed(() => {
+  return jobsStore.getJobsByCompany(authStore.currentUser.id)
+})
+
+const totalApplications = computed(() => {
+  return myJobs.value.reduce((total, job) => {
+    return total + applicationsStore.getApplicationsByJob(job.id).length
+  }, 0)
+})
+
+const pendingApplications = computed(() => {
+  return myJobs.value.reduce((total, job) => {
+    return total + applicationsStore.getApplicationsByJob(job.id).filter(app => app.status === 'pending').length
+  }, 0)
+})
+
+function getApplicationCount(jobId) {
+  return applicationsStore.getApplicationsByJob(jobId).length
+}
+</script>
+
 <template>
   <div class="flex">
     <Sidebar />
@@ -129,35 +163,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { computed } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useJobsStore } from '@/stores/jobs'
-import { useApplicationsStore } from '@/stores/applications'
-import Sidebar from '@/components/common/Sidebar.vue'
-
-const authStore = useAuthStore()
-const jobsStore = useJobsStore()
-const applicationsStore = useApplicationsStore()
-
-const myJobs = computed(() => {
-  return jobsStore.getJobsByCompany(authStore.currentUser.id)
-})
-
-const totalApplications = computed(() => {
-  return myJobs.value.reduce((total, job) => {
-    return total + applicationsStore.getApplicationsByJob(job.id).length
-  }, 0)
-})
-
-const pendingApplications = computed(() => {
-  return myJobs.value.reduce((total, job) => {
-    return total + applicationsStore.getApplicationsByJob(job.id).filter(app => app.status === 'pending').length
-  }, 0)
-})
-
-function getApplicationCount(jobId) {
-  return applicationsStore.getApplicationsByJob(jobId).length
-}
-</script>

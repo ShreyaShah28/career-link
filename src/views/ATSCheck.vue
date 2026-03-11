@@ -1,3 +1,83 @@
+<script setup>
+import { ref, computed } from 'vue'
+import { useJobsStore } from '@/stores/jobs'
+
+const jobsStore = useJobsStore()
+
+const selectedJobId = ref('')
+const resumeText = ref('')
+
+const availableJobs = computed(() => jobsStore.activeJobs)
+
+const selectedJob = computed(() => {
+  if (!selectedJobId.value) return null
+  return jobsStore.getJobById(parseInt(selectedJobId.value))
+})
+
+const matchedKeywords = computed(() => {
+  if (!selectedJob.value || !resumeText.value) return []
+  
+  const resumeLower = resumeText.value.toLowerCase()
+  return selectedJob.value.keywords.filter(keyword => 
+    resumeLower.includes(keyword.toLowerCase())
+  )
+})
+
+const missingKeywords = computed(() => {
+  if (!selectedJob.value) return []
+  
+  return selectedJob.value.keywords.filter(keyword => 
+    !matchedKeywords.value.includes(keyword)
+  )
+})
+
+const atsScore = computed(() => {
+  if (!selectedJob.value || !resumeText.value) return 0
+  
+  const totalKeywords = selectedJob.value.keywords.length
+  const matched = matchedKeywords.value.length
+  
+  return Math.round((matched / totalKeywords) * 100)
+})
+
+function checkATS() {
+  // This function is called on input to trigger reactivity
+  // The actual calculation happens in computed properties
+}
+
+function getScoreBgColor(score) {
+  if (score >= 80) return 'bg-green-100 text-green-700 border-green-400'
+  if (score >= 60) return 'bg-yellow-100 text-yellow-700 border-yellow-400'
+  return 'bg-red-100 text-red-700 border-red-400'
+}
+
+function getScoreTextColor(score) {
+  if (score >= 80) return 'text-green-700'
+  if (score >= 60) return 'text-yellow-700'
+  return 'text-red-700'
+}
+
+function getScoreBarColor(score) {
+  if (score >= 80) return 'bg-green-500'
+  if (score >= 60) return 'bg-yellow-500'
+  return 'bg-red-500'
+}
+
+function getScoreLabel(score) {
+  if (score >= 80) return 'Excellent Match!'
+  if (score >= 60) return 'Good Match'
+  if (score >= 40) return 'Fair Match'
+  return 'Needs Improvement'
+}
+
+function getScoreMessage(score) {
+  if (score >= 80) return 'Your resume is well-optimized for this position. You have a strong chance of passing the ATS.'
+  if (score >= 60) return 'Your resume has a decent match. Consider adding more relevant keywords to improve your score.'
+  if (score >= 40) return 'Your resume matches some requirements. Add more keywords from the job description.'
+  return 'Your resume needs significant optimization. Focus on including relevant keywords from the job posting.'
+}
+</script>
+
 <template>
   <div class="bg-gray-50 min-h-screen py-8">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -183,83 +263,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, computed } from 'vue'
-import { useJobsStore } from '@/stores/jobs'
-
-const jobsStore = useJobsStore()
-
-const selectedJobId = ref('')
-const resumeText = ref('')
-
-const availableJobs = computed(() => jobsStore.activeJobs)
-
-const selectedJob = computed(() => {
-  if (!selectedJobId.value) return null
-  return jobsStore.getJobById(parseInt(selectedJobId.value))
-})
-
-const matchedKeywords = computed(() => {
-  if (!selectedJob.value || !resumeText.value) return []
-  
-  const resumeLower = resumeText.value.toLowerCase()
-  return selectedJob.value.keywords.filter(keyword => 
-    resumeLower.includes(keyword.toLowerCase())
-  )
-})
-
-const missingKeywords = computed(() => {
-  if (!selectedJob.value) return []
-  
-  return selectedJob.value.keywords.filter(keyword => 
-    !matchedKeywords.value.includes(keyword)
-  )
-})
-
-const atsScore = computed(() => {
-  if (!selectedJob.value || !resumeText.value) return 0
-  
-  const totalKeywords = selectedJob.value.keywords.length
-  const matched = matchedKeywords.value.length
-  
-  return Math.round((matched / totalKeywords) * 100)
-})
-
-function checkATS() {
-  // This function is called on input to trigger reactivity
-  // The actual calculation happens in computed properties
-}
-
-function getScoreBgColor(score) {
-  if (score >= 80) return 'bg-green-100 text-green-700 border-green-400'
-  if (score >= 60) return 'bg-yellow-100 text-yellow-700 border-yellow-400'
-  return 'bg-red-100 text-red-700 border-red-400'
-}
-
-function getScoreTextColor(score) {
-  if (score >= 80) return 'text-green-700'
-  if (score >= 60) return 'text-yellow-700'
-  return 'text-red-700'
-}
-
-function getScoreBarColor(score) {
-  if (score >= 80) return 'bg-green-500'
-  if (score >= 60) return 'bg-yellow-500'
-  return 'bg-red-500'
-}
-
-function getScoreLabel(score) {
-  if (score >= 80) return 'Excellent Match!'
-  if (score >= 60) return 'Good Match'
-  if (score >= 40) return 'Fair Match'
-  return 'Needs Improvement'
-}
-
-function getScoreMessage(score) {
-  if (score >= 80) return 'Your resume is well-optimized for this position. You have a strong chance of passing the ATS.'
-  if (score >= 60) return 'Your resume has a decent match. Consider adding more relevant keywords to improve your score.'
-  if (score >= 40) return 'Your resume matches some requirements. Add more keywords from the job description.'
-  return 'Your resume needs significant optimization. Focus on including relevant keywords from the job posting.'
-}
-</script>

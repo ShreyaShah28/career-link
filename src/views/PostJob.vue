@@ -1,3 +1,56 @@
+<script setup>
+import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import { useJobsStore } from '@/stores/jobs'
+import Sidebar from '@/components/common/Sidebar.vue'
+
+const router = useRouter()
+const authStore = useAuthStore()
+const jobsStore = useJobsStore()
+
+const form = reactive({
+  title: '',
+  type: '',
+  location: '',
+  salary: '',
+  description: '',
+  requirements: '',
+  keywords: []
+})
+
+const keywordsInput = ref('')
+const successMessage = ref('')
+
+function addKeyword() {
+  const keyword = keywordsInput.value.trim()
+  if (keyword && !form.keywords.includes(keyword)) {
+    form.keywords.push(keyword)
+    keywordsInput.value = ''
+  }
+}
+
+function removeKeyword(index) {
+  form.keywords.splice(index, 1)
+}
+
+function handleSubmit() {
+  const jobData = {
+    ...form,
+    companyId: authStore.currentUser.id,
+    companyName: authStore.currentUser.companyName
+  }
+
+  jobsStore.addJob(jobData)
+  
+  successMessage.value = 'Job posted successfully!'
+  
+  setTimeout(() => {
+    router.push('/company/dashboard')
+  }, 1500)
+}
+</script>
+
 <template>
   <div class="flex">
     <Sidebar />
@@ -148,56 +201,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, reactive } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
-import { useJobsStore } from '@/stores/jobs'
-import Sidebar from '@/components/common/Sidebar.vue'
-
-const router = useRouter()
-const authStore = useAuthStore()
-const jobsStore = useJobsStore()
-
-const form = reactive({
-  title: '',
-  type: '',
-  location: '',
-  salary: '',
-  description: '',
-  requirements: '',
-  keywords: []
-})
-
-const keywordsInput = ref('')
-const successMessage = ref('')
-
-function addKeyword() {
-  const keyword = keywordsInput.value.trim()
-  if (keyword && !form.keywords.includes(keyword)) {
-    form.keywords.push(keyword)
-    keywordsInput.value = ''
-  }
-}
-
-function removeKeyword(index) {
-  form.keywords.splice(index, 1)
-}
-
-function handleSubmit() {
-  const jobData = {
-    ...form,
-    companyId: authStore.currentUser.id,
-    companyName: authStore.currentUser.companyName
-  }
-
-  jobsStore.addJob(jobData)
-  
-  successMessage.value = 'Job posted successfully!'
-  
-  setTimeout(() => {
-    router.push('/company/dashboard')
-  }, 1500)
-}
-</script>

@@ -1,3 +1,77 @@
+<script setup>
+import { ref, computed, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import { useJobsStore } from '@/stores/jobs'
+import { useApplicationsStore } from '@/stores/applications'
+
+const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
+const jobsStore = useJobsStore()
+const applicationsStore = useApplicationsStore()
+
+const jobId = parseInt(route.params.id)
+const job = computed(() => jobsStore.getJobById(jobId))
+
+const showApplicationForm = ref(false)
+const applicationForm = ref({
+  resume: '',
+  coverLetter: ''
+})
+
+const atsScore = ref(null)
+
+const hasApplied = computed(() => {
+  if (!authStore.isAuthenticated || !authStore.isJobSeeker) return false
+  return applicationsStore.hasApplied(jobId, authStore.currentUser.id)
+})
+
+// Calculate ATS score when resume changes
+watch(() => applicationForm.value.resume, (newResume) => {
+  if (newResume && job.value) {
+    atsScore.value = calculateATSScore(newResume, job.value.keywords)
+  } else {
+    atsScore.value = null
+  }
+})
+
+function calculateATSScore(resume, keywords) {
+  const resumeLower = resume.toLowerCase()
+  const matches = keywords.filter(keyword => 
+    resumeLower.includes(keyword.toLowerCase())
+  ).length
+  
+  return Math.round((matches / keywords.length) * 100)
+}
+
+function getScoreColor(score) {
+  if (score >= 80) return 'text-green-600'
+  if (score >= 60) return 'text-yellow-600'
+  return 'text-red-600'
+}
+
+function handleSubmit() {
+  const applicationData = {
+    jobId: jobId,
+    jobTitle: job.value.title,
+    applicantId: authStore.currentUser.id,
+    applicantName: authStore.currentUser.name,
+    applicantEmail: authStore.currentUser.email,
+    resume: applicationForm.value.resume,
+    coverLetter: applicationForm.value.coverLetter,
+    atsScore: atsScore.value
+  }
+
+  applicationsStore.submitApplication(applicationData)
+  showApplicationForm.value = false
+  
+  // Show success and redirect
+  alert('Application submitted successfully!')
+  router.push('/my-applications')
+}
+</script>
+
 <template>
   <div class="bg-gray-50 min-h-screen py-8">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -154,77 +228,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, computed, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
-import { useJobsStore } from '@/stores/jobs'
-import { useApplicationsStore } from '@/stores/applications'
-
-const route = useRoute()
-const router = useRouter()
-const authStore = useAuthStore()
-const jobsStore = useJobsStore()
-const applicationsStore = useApplicationsStore()
-
-const jobId = parseInt(route.params.id)
-const job = computed(() => jobsStore.getJobById(jobId))
-
-const showApplicationForm = ref(false)
-const applicationForm = ref({
-  resume: '',
-  coverLetter: ''
-})
-
-const atsScore = ref(null)
-
-const hasApplied = computed(() => {
-  if (!authStore.isAuthenticated || !authStore.isJobSeeker) return false
-  return applicationsStore.hasApplied(jobId, authStore.currentUser.id)
-})
-
-// Calculate ATS score when resume changes
-watch(() => applicationForm.value.resume, (newResume) => {
-  if (newResume && job.value) {
-    atsScore.value = calculateATSScore(newResume, job.value.keywords)
-  } else {
-    atsScore.value = null
-  }
-})
-
-function calculateATSScore(resume, keywords) {
-  const resumeLower = resume.toLowerCase()
-  const matches = keywords.filter(keyword => 
-    resumeLower.includes(keyword.toLowerCase())
-  ).length
-  
-  return Math.round((matches / keywords.length) * 100)
-}
-
-function getScoreColor(score) {
-  if (score >= 80) return 'text-green-600'
-  if (score >= 60) return 'text-yellow-600'
-  return 'text-red-600'
-}
-
-function handleSubmit() {
-  const applicationData = {
-    jobId: jobId,
-    jobTitle: job.value.title,
-    applicantId: authStore.currentUser.id,
-    applicantName: authStore.currentUser.name,
-    applicantEmail: authStore.currentUser.email,
-    resume: applicationForm.value.resume,
-    coverLetter: applicationForm.value.coverLetter,
-    atsScore: atsScore.value
-  }
-
-  applicationsStore.submitApplication(applicationData)
-  showApplicationForm.value = false
-  
-  // Show success and redirect
-  alert('Application submitted successfully!')
-  router.push('/my-applications')
-}
-</script>

@@ -1,3 +1,12 @@
+<script setup>
+import { computed } from 'vue'
+import { useJobsStore } from '@/stores/jobs'
+
+const jobsStore = useJobsStore()
+
+const featuredJobs = computed(() => jobsStore.activeJobs.slice(0, 3))
+</script>
+
 <template>
   <div>
     <!-- Hero Section -->
@@ -127,12 +136,3 @@
     </section>
   </div>
 </template>
-
-<script setup>
-import { computed } from 'vue'
-import { useJobsStore } from '@/stores/jobs'
-
-const jobsStore = useJobsStore()
-
-const featuredJobs = computed(() => jobsStore.activeJobs.slice(0, 3))
-</script>

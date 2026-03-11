@@ -1,3 +1,9 @@
+<script setup>
+import { computed } from 'vue'
+
+const currentYear = computed(() => new Date().getFullYear())
+</script>
+
 <template>
   <footer class="bg-gray-900 text-white mt-auto">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -83,9 +89,3 @@
     </div>
   </footer>
 </template>
-
-<script setup>
-import { computed } from 'vue'
-
-const currentYear = computed(() => new Date().getFullYear())
-</script>

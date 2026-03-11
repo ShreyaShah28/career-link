@@ -1,3 +1,37 @@
+<script setup>
+import { ref, computed } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import { useJobsStore } from '@/stores/jobs'
+import { useApplicationsStore } from '@/stores/applications'
+import Sidebar from '@/components/common/Sidebar.vue'
+
+const authStore = useAuthStore()
+const jobsStore = useJobsStore()
+const applicationsStore = useApplicationsStore()
+
+const showDeleteModal = ref(false)
+const jobToDelete = ref({ id: null, title: '' })
+
+const myJobs = computed(() => {
+  return jobsStore.getJobsByCompany(authStore.currentUser.id)
+})
+
+function getApplicationCount(jobId) {
+  return applicationsStore.getApplicationsByJob(jobId).length
+}
+
+function confirmDelete(jobId, jobTitle) {
+  jobToDelete.value = { id: jobId, title: jobTitle }
+  showDeleteModal.value = true
+}
+
+function deleteJob() {
+  jobsStore.deleteJob(jobToDelete.value.id)
+  showDeleteModal.value = false
+  jobToDelete.value = { id: null, title: '' }
+}
+</script>
+
 <template>
   <div class="flex">
     <Sidebar />
@@ -120,36 +154,3 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useJobsStore } from '@/stores/jobs'
-import { useApplicationsStore } from '@/stores/applications'
-import Sidebar from '@/components/common/Sidebar.vue'
-
-const authStore = useAuthStore()
-const jobsStore = useJobsStore()
-const applicationsStore = useApplicationsStore()
-
-const showDeleteModal = ref(false)
-const jobToDelete = ref({ id: null, title: '' })
-
-const myJobs = computed(() => {
-  return jobsStore.getJobsByCompany(authStore.currentUser.id)
-})
-
-function getApplicationCount(jobId) {
-  return applicationsStore.getApplicationsByJob(jobId).length
-}
-
-function confirmDelete(jobId, jobTitle) {
-  jobToDelete.value = { id: jobId, title: jobTitle }
-  showDeleteModal.value = true
-}
-
-function deleteJob() {
-  jobsStore.deleteJob(jobToDelete.value.id)
-  showDeleteModal.value = false
-  jobToDelete.value = { id: null, title: '' }
-}
-</script>

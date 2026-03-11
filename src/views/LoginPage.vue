@@ -1,3 +1,36 @@
+<script setup>
+import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+
+const router = useRouter()
+const route = useRoute()
+const authStore = useAuthStore()
+
+const email = ref('')
+const password = ref('')
+const error = ref('')
+
+function handleLogin() {
+  error.value = ''
+  
+  const result = authStore.login(email.value, password.value)
+  
+  if (result.success) {
+    const redirect = route.query.redirect || (authStore.isCompany ? '/company/dashboard' : '/jobseeker/dashboard')
+    router.push(redirect)
+  } else {
+    error.value = result.error
+  }
+}
+
+function quickLogin(demoEmail, demoPassword) {
+  email.value = demoEmail
+  password.value = demoPassword
+  handleLogin()
+}
+</script>
+
 <template>
   <div class="min-h-[80vh] flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
@@ -78,36 +111,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
-
-const router = useRouter()
-const route = useRoute()
-const authStore = useAuthStore()
-
-const email = ref('')
-const password = ref('')
-const error = ref('')
-
-function handleLogin() {
-  error.value = ''
-  
-  const result = authStore.login(email.value, password.value)
-  
-  if (result.success) {
-    const redirect = route.query.redirect || (authStore.isCompany ? '/company/dashboard' : '/jobseeker/dashboard')
-    router.push(redirect)
-  } else {
-    error.value = result.error
-  }
-}
-
-function quickLogin(demoEmail, demoPassword) {
-  email.value = demoEmail
-  password.value = demoPassword
-  handleLogin()
-}
-</script>

@@ -1,3 +1,19 @@
+<script setup>
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
+</script>
+
+<style scoped>
+.sidebar-link {
+  @apply flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-all duration-200;
+}
+
+.sidebar-link-active {
+  @apply bg-primary-600 text-white hover:bg-primary-700 hover:text-white;
+}
+</style>
+
 <template>
   <aside class="w-64 bg-white shadow-md min-h-screen">
     <div class="p-6">
@@ -93,18 +109,3 @@
   </aside>
 </template>
 
-<script setup>
-import { useAuthStore } from '@/stores/auth'
-
-const authStore = useAuthStore()
-</script>
-
-<style scoped>
-.sidebar-link {
-  @apply flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-all duration-200;
-}
-
-.sidebar-link-active {
-  @apply bg-primary-600 text-white hover:bg-primary-700 hover:text-white;
-}
-</style>

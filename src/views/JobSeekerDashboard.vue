@@ -1,3 +1,48 @@
+<script setup>
+import { computed } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import { useApplicationsStore } from '@/stores/applications'
+import Sidebar from '@/components/common/Sidebar.vue'
+
+const authStore = useAuthStore()
+const applicationsStore = useApplicationsStore()
+
+const myApplications = computed(() => {
+  return applicationsStore.getApplicationsByApplicant(authStore.currentUser.id)
+})
+
+const pendingCount = computed(() => {
+  return myApplications.value.filter(app => app.status === 'pending').length
+})
+
+const acceptedCount = computed(() => {
+  return myApplications.value.filter(app => app.status === 'accepted').length
+})
+
+const recentApplications = computed(() => {
+  return [...myApplications.value].slice(0, 5)
+})
+
+function getStatusClass(status) {
+  switch(status) {
+    case 'pending':
+      return 'bg-yellow-100 text-yellow-800'
+    case 'accepted':
+      return 'bg-green-100 text-green-800'
+    case 'rejected':
+      return 'bg-red-100 text-red-800'
+    default:
+      return 'bg-gray-100 text-gray-800'
+  }
+}
+
+function getScoreTextClass(score) {
+  if (score >= 80) return 'text-green-600'
+  if (score >= 60) return 'text-yellow-600'
+  return 'text-red-600'
+}
+</script>
+
 <template>
   <div class="flex">
     <Sidebar />
@@ -135,48 +180,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { computed } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useApplicationsStore } from '@/stores/applications'
-import Sidebar from '@/components/common/Sidebar.vue'
-
-const authStore = useAuthStore()
-const applicationsStore = useApplicationsStore()
-
-const myApplications = computed(() => {
-  return applicationsStore.getApplicationsByApplicant(authStore.currentUser.id)
-})
-
-const pendingCount = computed(() => {
-  return myApplications.value.filter(app => app.status === 'pending').length
-})
-
-const acceptedCount = computed(() => {
-  return myApplications.value.filter(app => app.status === 'accepted').length
-})
-
-const recentApplications = computed(() => {
-  return [...myApplications.value].slice(0, 5)
-})
-
-function getStatusClass(status) {
-  switch(status) {
-    case 'pending':
-      return 'bg-yellow-100 text-yellow-800'
-    case 'accepted':
-      return 'bg-green-100 text-green-800'
-    case 'rejected':
-      return 'bg-red-100 text-red-800'
-    default:
-      return 'bg-gray-100 text-gray-800'
-  }
-}
-
-function getScoreTextClass(score) {
-  if (score >= 80) return 'text-green-600'
-  if (score >= 60) return 'text-yellow-600'
-  return 'text-red-600'
-}
-</script>

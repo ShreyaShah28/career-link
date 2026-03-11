@@ -1,3 +1,35 @@
+<script setup>
+import { ref, computed } from 'vue'
+import { useJobsStore } from '@/stores/jobs'
+
+const jobsStore = useJobsStore()
+
+const searchQuery = ref('')
+const filterType = ref('')
+const filterLocation = ref('')
+
+const filteredJobs = computed(() => {
+  let jobs = jobsStore.activeJobs
+
+  if (searchQuery.value) {
+    jobs = jobs.filter(job => 
+      job.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      job.description.toLowerCase().includes(searchQuery.value.toLowerCase())
+    )
+  }
+
+  if (filterType.value) {
+    jobs = jobs.filter(job => job.type === filterType.value)
+  }
+
+  if (filterLocation.value) {
+    jobs = jobs.filter(job => job.location === filterLocation.value)
+  }
+
+  return jobs
+})
+</script>
+
 <template>
   <div class="bg-gray-50 min-h-screen py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -105,35 +137,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, computed } from 'vue'
-import { useJobsStore } from '@/stores/jobs'
-
-const jobsStore = useJobsStore()
-
-const searchQuery = ref('')
-const filterType = ref('')
-const filterLocation = ref('')
-
-const filteredJobs = computed(() => {
-  let jobs = jobsStore.activeJobs
-
-  if (searchQuery.value) {
-    jobs = jobs.filter(job => 
-      job.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      job.description.toLowerCase().includes(searchQuery.value.toLowerCase())
-    )
-  }
-
-  if (filterType.value) {
-    jobs = jobs.filter(job => job.type === filterType.value)
-  }
-
-  if (filterLocation.value) {
-    jobs = jobs.filter(job => job.location === filterLocation.value)
-  }
-
-  return jobs
-})
-</script>

@@ -1,3 +1,49 @@
+<script setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { useJobsStore } from '@/stores/jobs'
+import { useApplicationsStore } from '@/stores/applications'
+import Sidebar from '@/components/common/Sidebar.vue'
+
+const route = useRoute()
+const jobsStore = useJobsStore()
+const applicationsStore = useApplicationsStore()
+
+const jobId = parseInt(route.params.jobId)
+const job = computed(() => jobsStore.getJobById(jobId))
+
+const applicants = computed(() => {
+  return applicationsStore.getApplicationsByJob(jobId)
+})
+
+const sortedApplicants = computed(() => {
+  return [...applicants.value].sort((a, b) => b.atsScore - a.atsScore)
+})
+
+function updateStatus(applicationId, newStatus) {
+  applicationsStore.updateApplicationStatus(applicationId, newStatus)
+}
+
+function getStatusClass(status) {
+  switch(status) {
+    case 'pending':
+      return 'bg-yellow-100 text-yellow-800'
+    case 'accepted':
+      return 'bg-green-100 text-green-800'
+    case 'rejected':
+      return 'bg-red-100 text-red-800'
+    default:
+      return 'bg-gray-100 text-gray-800'
+  }
+}
+
+function getScoreColor(score) {
+  if (score >= 80) return 'bg-green-100 text-green-700 border-4 border-green-400'
+  if (score >= 60) return 'bg-yellow-100 text-yellow-700 border-4 border-yellow-400'
+  return 'bg-red-100 text-red-700 border-4 border-red-400'
+}
+</script>
+
 <template>
   <div class="flex">
     <Sidebar />
@@ -96,49 +142,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { useJobsStore } from '@/stores/jobs'
-import { useApplicationsStore } from '@/stores/applications'
-import Sidebar from '@/components/common/Sidebar.vue'
-
-const route = useRoute()
-const jobsStore = useJobsStore()
-const applicationsStore = useApplicationsStore()
-
-const jobId = parseInt(route.params.jobId)
-const job = computed(() => jobsStore.getJobById(jobId))
-
-const applicants = computed(() => {
-  return applicationsStore.getApplicationsByJob(jobId)
-})
-
-const sortedApplicants = computed(() => {
-  return [...applicants.value].sort((a, b) => b.atsScore - a.atsScore)
-})
-
-function updateStatus(applicationId, newStatus) {
-  applicationsStore.updateApplicationStatus(applicationId, newStatus)
-}
-
-function getStatusClass(status) {
-  switch(status) {
-    case 'pending':
-      return 'bg-yellow-100 text-yellow-800'
-    case 'accepted':
-      return 'bg-green-100 text-green-800'
-    case 'rejected':
-      return 'bg-red-100 text-red-800'
-    default:
-      return 'bg-gray-100 text-gray-800'
-  }
-}
-
-function getScoreColor(score) {
-  if (score >= 80) return 'bg-green-100 text-green-700 border-4 border-green-400'
-  if (score >= 60) return 'bg-yellow-100 text-yellow-700 border-4 border-yellow-400'
-  return 'bg-red-100 text-red-700 border-4 border-red-400'
-}
-</script>

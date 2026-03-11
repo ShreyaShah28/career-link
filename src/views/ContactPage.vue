@@ -1,3 +1,34 @@
+<script setup>
+import { ref, reactive } from 'vue'
+
+const form = reactive({
+  firstName: '',
+  lastName: '',
+  email: '',
+  subject: '',
+  message: ''
+})
+
+const submitMessage = ref('')
+const submitSuccess = ref(false)
+
+function handleSubmit() {
+  // Simulate form submission
+  submitSuccess.value = true
+  submitMessage.value = 'Thank you for contacting us! We will get back to you soon.'
+  
+  // Reset form
+  //setTimeout(() => {
+    form.firstName = ''
+    form.lastName = ''
+    form.email = ''
+    form.subject = ''
+    form.message = ''
+    submitMessage.value = ''
+  //}, 3000)
+}
+</script>
+
 <template>
   <div class="bg-gray-50 py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -136,34 +167,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, reactive } from 'vue'
-
-const form = reactive({
-  firstName: '',
-  lastName: '',
-  email: '',
-  subject: '',
-  message: ''
-})
-
-const submitMessage = ref('')
-const submitSuccess = ref(false)
-
-function handleSubmit() {
-  // Simulate form submission
-  submitSuccess.value = true
-  submitMessage.value = 'Thank you for contacting us! We will get back to you soon.'
-  
-  // Reset form
-  //setTimeout(() => {
-    form.firstName = ''
-    form.lastName = ''
-    form.email = ''
-    form.subject = ''
-    form.message = ''
-    submitMessage.value = ''
-  //}, 3000)
-}
-</script>
