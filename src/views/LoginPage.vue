@@ -45,7 +45,7 @@
           </button>
         </form>
 
-        <div class="mt-8 pt-6 border-t border-gray-200"  v-if="false">
+        <div class="mt-8 pt-6 border-t border-gray-200"   >
           <h3 class="text-sm font-medium text-gray-700 mb-4">Demo Accounts:</h3>
           
           <div class="space-y-3">

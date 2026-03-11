@@ -15,7 +15,7 @@
           <router-link to="/" class="text-gray-700 hover:text-primary-600 font-medium transition-colors">
             Home
           </router-link>
-          <router-link to="/jobs" class="text-gray-700 hover:text-primary-600 font-medium transition-colors" v-if="false">
+          <router-link to="/jobs" class="text-gray-700 hover:text-primary-600 font-medium transition-colors"  >
             Browse Jobs
           </router-link>
           <router-link to="/about" class="text-gray-700 hover:text-primary-600 font-medium transition-colors">
@@ -24,7 +24,7 @@
           <router-link to="/contact" class="text-gray-700 hover:text-primary-600 font-medium transition-colors">
             Contact
           </router-link>
-          <router-link to="/ats-check" class="text-gray-700 hover:text-primary-600 font-medium transition-colors"  v-if="false">
+          <router-link to="/ats-check" class="text-gray-700 hover:text-primary-600 font-medium transition-colors"   >
             ATS Check
           </router-link>
         </nav>

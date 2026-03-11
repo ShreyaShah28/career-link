@@ -19,7 +19,7 @@
                 Home
               </router-link>
             </li>
-            <li  v-if="false">
+            <li   >
               <router-link to="/jobs" class="text-gray-400 hover:text-white transition-colors">
                 Browse Jobs
               </router-link>
@@ -41,12 +41,12 @@
         <div>
           <h3 class="text-lg font-bold mb-4">For Job Seekers</h3>
           <ul class="space-y-2 text-sm">
-            <li v-if="false">
+            <li  >
               <router-link to="/jobs" class="text-gray-400 hover:text-white transition-colors">
                 Browse Jobs
               </router-link>
             </li>
-            <li v-if="false">
+            <li  >
               <router-link to="/ats-check" class="text-gray-400 hover:text-white transition-colors">
                 ATS Resume Check
               </router-link>
