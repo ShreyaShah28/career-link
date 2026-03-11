@@ -4,7 +4,7 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <!-- About Section -->
         <div>
-          <h3 class="text-lg font-bold mb-4">JobPortal</h3>
+          <h3 class="text-lg font-bold mb-4"></h3>
           <p class="text-gray-400 text-sm">
             Connecting talented professionals with amazing opportunities.
           </p>
@@ -19,7 +19,7 @@
                 Home
               </router-link>
             </li>
-            <li>
+            <li  v-if="false">
               <router-link to="/jobs" class="text-gray-400 hover:text-white transition-colors">
                 Browse Jobs
               </router-link>
@@ -41,12 +41,12 @@
         <div>
           <h3 class="text-lg font-bold mb-4">For Job Seekers</h3>
           <ul class="space-y-2 text-sm">
-            <li>
+            <li v-if="false">
               <router-link to="/jobs" class="text-gray-400 hover:text-white transition-colors">
                 Browse Jobs
               </router-link>
             </li>
-            <li>
+            <li v-if="false">
               <router-link to="/ats-check" class="text-gray-400 hover:text-white transition-colors">
                 ATS Resume Check
               </router-link>
@@ -78,7 +78,7 @@
       </div>
 
       <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-        <p>&copy; {{ currentYear }} JobPortal. All rights reserved.</p>
+        <p>&copy; {{ currentYear }} Career-Link. All rights reserved.</p>
       </div>
     </div>
   </footer>

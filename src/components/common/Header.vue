@@ -7,7 +7,7 @@
           <svg class="w-8 h-8 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
           </svg>
-          <span class="text-xl font-bold text-gray-900">JobPortal</span>
+          <span class="text-xl font-bold text-gray-900">Career-Link</span>
         </router-link>
 
         <!-- Desktop Navigation -->
@@ -15,7 +15,7 @@
           <router-link to="/" class="text-gray-700 hover:text-primary-600 font-medium transition-colors">
             Home
           </router-link>
-          <router-link to="/jobs" class="text-gray-700 hover:text-primary-600 font-medium transition-colors">
+          <router-link to="/jobs" class="text-gray-700 hover:text-primary-600 font-medium transition-colors" v-if="false">
             Browse Jobs
           </router-link>
           <router-link to="/about" class="text-gray-700 hover:text-primary-600 font-medium transition-colors">
@@ -24,7 +24,7 @@
           <router-link to="/contact" class="text-gray-700 hover:text-primary-600 font-medium transition-colors">
             Contact
           </router-link>
-          <router-link to="/ats-check" class="text-gray-700 hover:text-primary-600 font-medium transition-colors">
+          <router-link to="/ats-check" class="text-gray-700 hover:text-primary-600 font-medium transition-colors"  v-if="false">
             ATS Check
           </router-link>
         </nav>

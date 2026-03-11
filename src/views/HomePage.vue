@@ -10,7 +10,7 @@
           <p class="text-xl md:text-2xl mb-8 text-primary-100">
             Connect with top companies and discover amazing career opportunities
           </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <div class="flex flex-col sm:flex-row gap-4 justify-center"  v-if="false">
             <router-link to="/jobs" class="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
               Browse Jobs
             </router-link>
@@ -51,8 +51,8 @@
             v-for="job in featuredJobs" 
             :key="job.id"
             class="card cursor-pointer"
-            @click="$router.push(`/jobs/${job.id}`)"
           >
+            <!-- @click="$router.push(`/jobs/${job.id}`)" -->
             <div class="flex items-start justify-between mb-4">
               <div>
                 <h3 class="text-xl font-semibold text-gray-900 mb-1">{{ job.title }}</h3>
@@ -71,7 +71,7 @@
             <div class="text-primary-600 font-semibold">{{ job.salary }}</div>
           </div>
         </div>
-        <div class="text-center mt-8">
+        <div class="text-center mt-8" v-if="false">
           <router-link to="/jobs" class="btn-primary">
             View All Jobs
           </router-link>

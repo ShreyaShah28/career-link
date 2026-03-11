@@ -4,7 +4,7 @@
       <div class="bg-white rounded-lg shadow-md p-8">
         <div class="text-center mb-8">
           <h2 class="text-3xl font-bold text-gray-900">Sign In</h2>
-          <p class="mt-2 text-gray-600">Welcome back to JobPortal</p>
+          <p class="mt-2 text-gray-600">Welcome back to Career-Link</p>
         </div>
 
         <form @submit.prevent="handleLogin" class="space-y-6">
@@ -45,7 +45,7 @@
           </button>
         </form>
 
-        <div class="mt-8 pt-6 border-t border-gray-200">
+        <div class="mt-8 pt-6 border-t border-gray-200"  v-if="false">
           <h3 class="text-sm font-medium text-gray-700 mb-4">Demo Accounts:</h3>
           
           <div class="space-y-3">

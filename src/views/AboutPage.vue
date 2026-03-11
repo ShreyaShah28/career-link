@@ -2,11 +2,11 @@
   <div class="bg-gray-50 py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="bg-white rounded-lg shadow-md p-8">
-        <h1 class="text-4xl font-bold text-gray-900 mb-6">About JobPortal</h1>
+        <h1 class="text-4xl font-bold text-gray-900 mb-6">About Career-Link</h1>
         
         <div class="prose max-w-none">
           <p class="text-lg text-gray-700 mb-6">
-            JobPortal is a cutting-edge platform designed to bridge the gap between talented professionals 
+            Career-Link is a cutting-edge platform designed to bridge the gap between talented professionals 
             and forward-thinking companies. We're committed to making the job search and recruitment process 
             more efficient, transparent, and rewarding for everyone involved.
           </p>
@@ -101,7 +101,7 @@
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Join Us Today</h2>
             <p class="text-gray-700 mb-4">
               Whether you're looking for your next career move or searching for the perfect candidate, 
-              JobPortal is here to help you succeed.
+              Career-Link is here to help you succeed.
             </p>
             <router-link to="/login" class="btn-primary">
               Get Started

@@ -102,7 +102,7 @@
               </div>
               <div class="ml-3">
                 <h3 class="text-lg font-semibold text-gray-900">Email</h3>
-                <p class="text-gray-600">support@jobportal.com</p>
+                <p class="text-gray-600">support@Career-Link.com</p>
               </div>
             </div>
 
@@ -157,13 +157,13 @@ function handleSubmit() {
   submitMessage.value = 'Thank you for contacting us! We will get back to you soon.'
   
   // Reset form
-  setTimeout(() => {
+  //setTimeout(() => {
     form.firstName = ''
     form.lastName = ''
     form.email = ''
     form.subject = ''
     form.message = ''
     submitMessage.value = ''
-  }, 3000)
+  //}, 3000)
 }
 </script>
