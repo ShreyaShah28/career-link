@@ -1,143 +1,143 @@
 {
-    "jobs": [
-        {
-            "id": 1,
-            "companyId": 1,
-            "companyName": "Tech Corp",
-            "title": "Senior Frontend Developer",
-            "description": "We are looking for an experienced Frontend Developer to join our team.",
-            "requirements": "Strong knowledge of Vue.js, React, or Angular. 3+ years of experience.",
-            "keywords": [
-                "Vue.js",
-                "React",
-                "JavaScript",
-                "HTML",
-                "CSS",
-                "Frontend",
-                "Web Development"
-            ],
-            "location": "Remote",
-            "type": "Full-time",
-            "salary": "$80,000 - $120,000",
-            "posted": "2024-02-01",
-            "status": "active"
-        },
-        {
-            "id": 2,
-            "companyId": 1,
-            "companyName": "Tech Corp",
-            "title": "Backend Engineer",
-            "description": "Join our backend team to build scalable APIs and services.",
-            "requirements": "Experience with Node.js, Python, or Go. Database knowledge required.",
-            "keywords": [
-                "Node.js",
-                "Python",
-                "API",
-                "Database",
-                "Backend",
-                "MongoDB",
-                "PostgreSQL"
-            ],
-            "location": "New York, NY",
-            "type": "Full-time",
-            "salary": "$90,000 - $130,000",
-            "posted": "2024-02-03",
-            "status": "active"
-        },
-        {
-            "id": 3,
-            "companyId": 2,
-            "companyName": "Finance Solutions",
-            "title": "Data Analyst",
-            "description": "Analyze financial data and create insights for our clients.",
-            "requirements": "Strong analytical skills, experience with Python and SQL.",
-            "keywords": [
-                "Python",
-                "SQL",
-                "Data Analysis",
-                "Excel",
-                "Statistics",
-                "Machine Learning"
-            ],
-            "location": "Chicago, IL",
-            "type": "Full-time",
-            "salary": "$70,000 - $100,000",
-            "posted": "2024-01-28",
-            "status": "active"
-        }
-    ],
-    "users": [
-        {
-            "id": 1,
-            "email": "company1@example.com",
-            "password": "company123",
-            "type": "company",
-            "name": "Tech Corp",
-            "companyName": "Tech Corp",
-            "industry": "Technology"
-        },
-        {
-            "id": 2,
-            "email": "company2@example.com",
-            "password": "company123",
-            "type": "company",
-            "name": "Finance Solutions",
-            "companyName": "Finance Solutions",
-            "industry": "Finance"
-        },
-        {
-            "id": 3,
-            "email": "seeker1@example.com",
-            "password": "seeker123",
-            "type": "jobseeker",
-            "name": "John Doe",
-            "skills": [
-                "JavaScript",
-                "Vue.js",
-                "Node.js"
-            ],
-            "experience": "3 years"
-        },
-        {
-            "id": 4,
-            "email": "seeker2@example.com",
-            "password": "seeker123",
-            "type": "jobseeker",
-            "name": "Jane Smith",
-            "skills": [
-                "Python",
-                "Data Analysis",
-                "Machine Learning"
-            ],
-            "experience": "5 years"
-        }
-    ],
-    "applications": [
-        {
-            "id": 1,
-            "jobId": 1,
-            "jobTitle": "Senior Frontend Developer",
-            "applicantId": 3,
-            "applicantName": "John Doe",
-            "applicantEmail": "seeker1@example.com",
-            "resume": "Experienced Frontend Developer with 3 years of experience in Vue.js, React, and modern web technologies.",
-            "coverLetter": "I am excited to apply for this position...",
-            "appliedDate": "2024-02-05",
-            "status": "pending",
-            "atsScore": 85
-        },
-        {
-            "id": 2,
-            "jobId": 3,
-            "jobTitle": "Data Analyst",
-            "applicantId": 4,
-            "applicantName": "Jane Smith",
-            "applicantEmail": "seeker2@example.com",
-            "resume": "Data Analyst with 5 years of experience in Python, SQL, and Machine Learning.",
-            "coverLetter": "I would love to join your team...",
-            "appliedDate": "2024-02-04",
-            "status": "pending",
-            "atsScore": 92
-        }
-    ]
+  "jobs": [
+    {
+      "id": "1773319386540",
+      "title": "Junior Developer",
+      "type": "Part-time",
+      "location": "bhavnagar",
+      "salary": "12,000INR",
+      "description": "A Junior Developer who can work on Front-end side. He/She should be fluent with Javascript, HTML, CSS.",
+      "requirements": "Master's Degree",
+      "keywords": [
+        "Javascript",
+        "HTML",
+        "CSS",
+        "Pinia"
+      ],
+      "companyId": "1",
+      "companyName": "Tech Corp",
+      "posted": "2026-03-12",
+      "status": "active"
+    },
+    {
+      "id": "1773320272891",
+      "title": "Senior Developer",
+      "type": "Full-time",
+      "location": "Surat",
+      "salary": "16,000 INR - 20,000INR",
+      "description": "The person should be able to understand the project requirements and distribute tasks to junior developers.",
+      "requirements": "Should have experience of at least 2+ years",
+      "keywords": [
+        "Vue.js",
+        "Tailwind",
+        "HTML",
+        "Pinia"
+      ],
+      "companyId": "2",
+      "companyName": "Finance Solutions",
+      "posted": "2026-03-12",
+      "status": "active"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "email": "company1@example.com",
+      "password": "company123",
+      "type": "company",
+      "name": "Tech Corp",
+      "companyName": "Tech Corp",
+      "industry": "Technology"
+    },
+    {
+      "id": "2",
+      "email": "company2@example.com",
+      "password": "company123",
+      "type": "company",
+      "name": "Finance Solutions",
+      "companyName": "Finance Solutions",
+      "industry": "Finance"
+    },
+    {
+      "id": "3",
+      "email": "seeker1@example.com",
+      "password": "seeker123",
+      "type": "jobseeker",
+      "name": "John Doe",
+      "skills": [
+        "JavaScript",
+        "Vue.js",
+        "Node.js"
+      ],
+      "experience": "3 years"
+    },
+    {
+      "id": "4",
+      "email": "seeker2@example.com",
+      "password": "seeker123",
+      "type": "jobseeker",
+      "name": "Jane Smith",
+      "skills": [
+        "Python",
+        "Data Analysis",
+        "Machine Learning"
+      ],
+      "experience": "5 years"
+    }
+  ],
+  "applications": [
+    {
+      "id": "1773321369372",
+      "jobId": "1773320272891",
+      "jobTitle": "Senior Developer",
+      "applicantId": "3",
+      "applicantName": "John Doe",
+      "applicantEmail": "seeker1@example.com",
+      "resume": "I know vue.js tailwind css and html ",
+      "coverLetter": "i have worked as mentor for 2 new interns and now i want to try being head and helping everyone out, as well be a guide and medium of understanding work to them.",
+      "atsScore": 75,
+      "appliedDate": "2026-03-12",
+      "status": "pending"
+    },
+    {
+      "id": "1773403392630",
+      "jobId": "1773319386540",
+      "jobTitle": "Junior Developer",
+      "applicantId": "3",
+      "applicantName": "John Doe",
+      "applicantEmail": "seeker1@example.com",
+      "resume": "I know javascript, html and basic pinia",
+      "coverLetter": "I am waiting to gain this amazing experience",
+      "atsScore": 75,
+      "appliedDate": "2026-03-13",
+      "status": "pending"
+    },
+    {
+      "id": "1773406970551",
+      "jobId": "1773319386540",
+      "jobTitle": "Junior Developer",
+      "applicantId": "4",
+      "applicantName": "Jane Smith",
+      "applicantEmail": "seeker2@example.com",
+      "resume": "I have learnt about Pinia store",
+      "coverLetter": "I want to join you and grow together",
+      "atsScore": 25,
+      "appliedDate": "2026-03-13",
+      "status": "pending"
+    },
+    {
+      "id": "1773408882922",
+      "jobId": "1773320272891",
+      "jobTitle": "Senior Developer",
+      "applicantId": "4",
+      "applicantName": "Jane Smith",
+      "applicantEmail": "seeker2@example.com",
+      "resume": "Pinia store is my speciality",
+      "coverLetter": "I really want this job.",
+      "atsScore": 25,
+      "appliedDate": "2026-03-13",
+      "status": "pending"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

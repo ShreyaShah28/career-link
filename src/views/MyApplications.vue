@@ -14,24 +14,24 @@ const myApplications = computed(() => {
 })
 
 const pendingApplications = computed(() => {
-  return myApplications.value.filter(app => app.status === 'pending')
+  return myApplications.value.filter((app) => app.status === 'pending')
 })
 
 const acceptedApplications = computed(() => {
-  return myApplications.value.filter(app => app.status === 'accepted')
+  return myApplications.value.filter((app) => app.status === 'accepted')
 })
 
 const rejectedApplications = computed(() => {
-  return myApplications.value.filter(app => app.status === 'rejected')
+  return myApplications.value.filter((app) => app.status === 'rejected')
 })
 
 const filteredApplications = computed(() => {
   if (activeFilter.value === 'all') return myApplications.value
-  return myApplications.value.filter(app => app.status === activeFilter.value)
+  return myApplications.value.filter((app) => app.status === activeFilter.value)
 })
 
 function getStatusClass(status) {
-  switch(status) {
+  switch (status) {
     case 'pending':
       return 'bg-yellow-100 text-yellow-800'
     case 'accepted':
@@ -59,31 +59,47 @@ function getScoreBgColor(score) {
 
         <!-- Filter Tabs -->
         <div class="flex gap-2 mb-6 border-b border-gray-200">
-          <button 
+          <button
             @click="activeFilter = 'all'"
             class="px-4 py-2 font-medium transition-colors border-b-2"
-            :class="activeFilter === 'all' ? 'border-primary-600 text-primary-600' : 'border-transparent text-gray-600 hover:text-gray-900'"
+            :class="
+              activeFilter === 'all'
+                ? 'border-primary-600 text-primary-600'
+                : 'border-transparent text-gray-600 hover:text-gray-900'
+            "
           >
             All ({{ myApplications.length }})
           </button>
-          <button 
+          <button
             @click="activeFilter = 'pending'"
             class="px-4 py-2 font-medium transition-colors border-b-2"
-            :class="activeFilter === 'pending' ? 'border-primary-600 text-primary-600' : 'border-transparent text-gray-600 hover:text-gray-900'"
+            :class="
+              activeFilter === 'pending'
+                ? 'border-primary-600 text-primary-600'
+                : 'border-transparent text-gray-600 hover:text-gray-900'
+            "
           >
             Pending ({{ pendingApplications.length }})
           </button>
-          <button 
+          <button
             @click="activeFilter = 'accepted'"
             class="px-4 py-2 font-medium transition-colors border-b-2"
-            :class="activeFilter === 'accepted' ? 'border-primary-600 text-primary-600' : 'border-transparent text-gray-600 hover:text-gray-900'"
+            :class="
+              activeFilter === 'accepted'
+                ? 'border-primary-600 text-primary-600'
+                : 'border-transparent text-gray-600 hover:text-gray-900'
+            "
           >
             Accepted ({{ acceptedApplications.length }})
           </button>
-          <button 
+          <button
             @click="activeFilter = 'rejected'"
             class="px-4 py-2 font-medium transition-colors border-b-2"
-            :class="activeFilter === 'rejected' ? 'border-primary-600 text-primary-600' : 'border-transparent text-gray-600 hover:text-gray-900'"
+            :class="
+              activeFilter === 'rejected'
+                ? 'border-primary-600 text-primary-600'
+                : 'border-transparent text-gray-600 hover:text-gray-900'
+            "
           >
             Rejected ({{ rejectedApplications.length }})
           </button>
@@ -91,33 +107,50 @@ function getScoreBgColor(score) {
 
         <!-- No Applications -->
         <div v-if="filteredApplications.length === 0" class="card text-center py-12">
-          <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          <svg
+            class="w-16 h-16 mx-auto mb-4 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
           </svg>
           <p class="text-gray-500 mb-4">
-            {{ activeFilter === 'all' ? 'No applications yet.' : `No ${activeFilter} applications.` }}
+            {{
+              activeFilter === 'all'
+                ? 'No applications yet.'
+                : `No ${activeFilter} applications.`
+            }}
           </p>
-          <router-link to="/jobs" class="btn-primary">
-            Browse Jobs
-          </router-link>
+          <router-link to="/jobs" class="btn-primary"> Browse Jobs </router-link>
         </div>
 
         <!-- Applications List -->
         <div v-else class="space-y-6">
-          <div 
-            v-for="application in filteredApplications" 
+          <div
+            v-for="application in filteredApplications"
             :key="application.id"
             class="card"
           >
             <div class="flex items-start justify-between mb-4">
               <div class="flex-1">
-                <h3 class="text-2xl font-semibold text-gray-900 mb-2">{{ application.jobTitle }}</h3>
+                <h3 class="text-2xl font-semibold text-gray-900 mb-2">
+                  {{ application.jobTitle }}
+                </h3>
                 <div class="flex items-center gap-3 mb-3">
-                  <span 
+                  <span
                     class="px-3 py-1 rounded-full text-sm font-medium"
                     :class="getStatusClass(application.status)"
                   >
-                    {{ application.status.charAt(0).toUpperCase() + application.status.slice(1) }}
+                    {{
+                      application.status.charAt(0).toUpperCase() +
+                      application.status.slice(1)
+                    }}
                   </span>
                   <span class="text-sm text-gray-600">
                     Applied on {{ application.appliedDate }}
@@ -127,7 +160,7 @@ function getScoreBgColor(score) {
 
               <!-- ATS Score -->
               <div class="text-center ml-4">
-                <div 
+                <div
                   class="w-16 h-16 rounded-full flex items-center justify-center text-xl font-bold mb-1"
                   :class="getScoreBgColor(application.atsScore)"
                 >
@@ -158,10 +191,16 @@ function getScoreBgColor(score) {
               <div v-if="application.status === 'pending'" class="text-sm text-gray-600">
                 ⏳ Your application is under review
               </div>
-              <div v-else-if="application.status === 'accepted'" class="text-sm text-green-700 font-medium">
+              <div
+                v-else-if="application.status === 'accepted'"
+                class="text-sm text-green-700 font-medium"
+              >
                 ✓ Congratulations! Your application has been accepted
               </div>
-              <div v-else-if="application.status === 'rejected'" class="text-sm text-gray-600">
+              <div
+                v-else-if="application.status === 'rejected'"
+                class="text-sm text-gray-600"
+              >
                 We appreciate your interest. Keep applying!
               </div>
             </div>

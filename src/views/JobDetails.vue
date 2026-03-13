@@ -11,13 +11,13 @@ const authStore = useAuthStore()
 const jobsStore = useJobsStore()
 const applicationsStore = useApplicationsStore()
 
-const jobId = parseInt(route.params.id)
-const job = computed(() => jobsStore.getJobById(jobId))
+const jobId = route.params.id
+const job = computed(() => jobsStore.getJobById(route.params.id))
 
 const showApplicationForm = ref(false)
 const applicationForm = ref({
   resume: '',
-  coverLetter: ''
+  coverLetter: '',
 })
 
 const atsScore = ref(null)
@@ -28,20 +28,23 @@ const hasApplied = computed(() => {
 })
 
 // Calculate ATS score when resume changes
-watch(() => applicationForm.value.resume, (newResume) => {
-  if (newResume && job.value) {
-    atsScore.value = calculateATSScore(newResume, job.value.keywords)
-  } else {
-    atsScore.value = null
+watch(
+  () => applicationForm.value.resume,
+  (newResume) => {
+    if (newResume && job.value) {
+      atsScore.value = calculateATSScore(newResume, job.value.keywords)
+    } else {
+      atsScore.value = null
+    }
   }
-})
+)
 
 function calculateATSScore(resume, keywords) {
   const resumeLower = resume.toLowerCase()
-  const matches = keywords.filter(keyword => 
+  const matches = keywords.filter((keyword) =>
     resumeLower.includes(keyword.toLowerCase())
   ).length
-  
+
   return Math.round((matches / keywords.length) * 100)
 }
 
@@ -53,31 +56,40 @@ function getScoreColor(score) {
 
 function handleSubmit() {
   const applicationData = {
-    jobId: jobId,
+    jobId: route.params.id,
     jobTitle: job.value.title,
     applicantId: authStore.currentUser.id,
     applicantName: authStore.currentUser.name,
     applicantEmail: authStore.currentUser.email,
     resume: applicationForm.value.resume,
     coverLetter: applicationForm.value.coverLetter,
-    atsScore: atsScore.value
+    atsScore: atsScore.value,
   }
 
   applicationsStore.submitApplication(applicationData)
   showApplicationForm.value = false
-  
+
   // Show success and redirect
   alert('Application submitted successfully!')
   router.push('/my-applications')
 }
+console.log(job)
 </script>
 
 <template>
   <div class="bg-gray-50 min-h-screen py-8">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <router-link to="/jobs" class="text-primary-600 hover:text-primary-700 mb-6 inline-flex items-center">
+      <router-link
+        to="/jobs"
+        class="text-primary-600 hover:text-primary-700 mb-6 inline-flex items-center"
+      >
         <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
         </svg>
         Back to Jobs
       </router-link>
@@ -91,14 +103,26 @@ function handleSubmit() {
         <div class="card mb-6">
           <h1 class="text-3xl font-bold text-gray-900 mb-3">{{ job.title }}</h1>
           <p class="text-xl text-gray-700 mb-4">{{ job.companyName }}</p>
-          
+
           <div class="flex flex-wrap gap-2 mb-4">
-            <span class="px-4 py-2 bg-primary-100 text-primary-700 rounded-full font-medium">
+            <span
+              class="px-4 py-2 bg-primary-100 text-primary-700 rounded-full font-medium"
+            >
               {{ job.type }}
             </span>
             <span class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full">
-              <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <svg
+                class="w-4 h-4 inline mr-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
               </svg>
               {{ job.location }}
             </span>
@@ -108,21 +132,27 @@ function handleSubmit() {
           </div>
 
           <p class="text-sm text-gray-500 mb-4">Posted on {{ job.posted }}</p>
-
           <div v-if="authStore.isAuthenticated && authStore.isJobSeeker">
-            <button 
+            <button
               v-if="!hasApplied"
               @click="showApplicationForm = true"
               class="btn-primary"
             >
               Apply Now
             </button>
-            <div v-else class="bg-green-100 text-green-800 px-4 py-3 rounded-lg inline-block">
+            <div
+              v-else
+              class="bg-green-100 text-green-800 px-4 py-3 rounded-lg inline-block"
+            >
               ✓ You have already applied to this job
             </div>
           </div>
-          <div v-else-if="!authStore.isAuthenticated" class="bg-blue-100 text-blue-800 px-4 py-3 rounded-lg">
-            <router-link to="/login" class="underline font-medium">Sign in</router-link> to apply for this job
+          <div
+            v-else-if="!authStore.isAuthenticated"
+            class="bg-blue-100 text-blue-800 px-4 py-3 rounded-lg"
+          >
+            <router-link to="/login" class="underline font-medium">Sign in</router-link>
+            to apply for this job
           </div>
         </div>
 
@@ -142,8 +172,8 @@ function handleSubmit() {
         <div class="card mb-6">
           <h2 class="text-2xl font-bold text-gray-900 mb-4">Required Skills</h2>
           <div class="flex flex-wrap gap-2">
-            <span 
-              v-for="keyword in job.keywords" 
+            <span
+              v-for="keyword in job.keywords"
               :key="keyword"
               class="px-3 py-2 bg-blue-100 text-blue-700 rounded-lg font-medium"
             >
@@ -151,7 +181,10 @@ function handleSubmit() {
             </span>
           </div>
           <p class="text-sm text-gray-600 mt-4">
-            💡 Tip: Use the <router-link to="/ats-check" class="text-primary-600 hover:underline">ATS Check</router-link> 
+            💡 Tip: Use the
+            <router-link to="/ats-check" class="text-primary-600 hover:underline"
+              >ATS Check</router-link
+            >
             tool to see how well your resume matches these keywords!
           </p>
         </div>
@@ -160,7 +193,7 @@ function handleSubmit() {
   </div>
 
   <!-- Application Modal -->
-  <div 
+  <div
     v-if="showApplicationForm"
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
     @click.self="showApplicationForm = false"
@@ -197,26 +230,30 @@ function handleSubmit() {
           ></textarea>
         </div>
 
-        <div v-if="atsScore !== null" class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <div
+          v-if="atsScore !== null"
+          class="bg-blue-50 border border-blue-200 rounded-lg p-4"
+        >
           <div class="flex items-center justify-between mb-2">
             <h3 class="font-semibold text-gray-900">ATS Score Preview</h3>
-            <span 
-              class="text-2xl font-bold"
-              :class="getScoreColor(atsScore)"
-            >
+            <span class="text-2xl font-bold" :class="getScoreColor(atsScore)">
               {{ atsScore }}%
             </span>
           </div>
           <p class="text-sm text-gray-600">
-            {{ atsScore >= 80 ? '✓ Excellent match!' : atsScore >= 60 ? '⚠ Good match. Consider adding more relevant keywords.' : '⚠ Low match. Try improving your resume with job-specific keywords.' }}
+            {{
+              atsScore >= 80
+                ? '✓ Excellent match!'
+                : atsScore >= 60
+                ? '⚠ Good match. Consider adding more relevant keywords.'
+                : '⚠ Low match. Try improving your resume with job-specific keywords.'
+            }}
           </p>
         </div>
 
         <div class="flex gap-4">
-          <button type="submit" class="btn-primary flex-1">
-            Submit Application
-          </button>
-          <button 
+          <button type="submit" class="btn-primary flex-1">Submit Application</button>
+          <button
             type="button"
             @click="showApplicationForm = false"
             class="btn-secondary flex-1"

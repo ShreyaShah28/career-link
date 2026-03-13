@@ -16,7 +16,7 @@ const form = reactive({
   salary: '',
   description: '',
   requirements: '',
-  keywords: []
+  keywords: [],
 })
 
 const keywordsInput = ref('')
@@ -38,13 +38,13 @@ function handleSubmit() {
   const jobData = {
     ...form,
     companyId: authStore.currentUser.id,
-    companyName: authStore.currentUser.companyName
+    companyName: authStore.currentUser.companyName,
   }
 
   jobsStore.addJob(jobData)
-  
+
   successMessage.value = 'Job posted successfully!'
-  
+
   setTimeout(() => {
     router.push('/company/dashboard')
   }, 1500)
@@ -79,12 +79,7 @@ function handleSubmit() {
                 <label for="type" class="block text-sm font-medium text-gray-700 mb-2">
                   Job Type *
                 </label>
-                <select
-                  v-model="form.type"
-                  id="type"
-                  required
-                  class="input-field"
-                >
+                <select v-model="form.type" id="type" required class="input-field">
                   <option value="">Select type</option>
                   <option value="Full-time">Full-time</option>
                   <option value="Part-time">Part-time</option>
@@ -94,7 +89,10 @@ function handleSubmit() {
               </div>
 
               <div>
-                <label for="location" class="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  for="location"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Location *
                 </label>
                 <input
@@ -123,7 +121,10 @@ function handleSubmit() {
             </div>
 
             <div>
-              <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                for="description"
+                class="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Job Description *
               </label>
               <textarea
@@ -137,7 +138,10 @@ function handleSubmit() {
             </div>
 
             <div>
-              <label for="requirements" class="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                for="requirements"
+                class="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Requirements *
               </label>
               <textarea
@@ -163,13 +167,13 @@ function handleSubmit() {
                 @keypress.enter.prevent="addKeyword"
               />
               <div class="flex flex-wrap gap-2 mb-2">
-                <span 
-                  v-for="(keyword, index) in form.keywords" 
+                <span
+                  v-for="(keyword, index) in form.keywords"
                   :key="index"
                   class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm flex items-center"
                 >
                   {{ keyword }}
-                  <button 
+                  <button
                     type="button"
                     @click="removeKeyword(index)"
                     class="ml-2 text-primary-900 hover:text-primary-600"
@@ -179,18 +183,20 @@ function handleSubmit() {
                 </span>
               </div>
               <p class="text-sm text-gray-500">
-                Add keywords that will be used for ATS matching with candidate resumes (e.g., JavaScript, React, Node.js)
+                Add keywords that will be used for ATS matching with candidate resumes
+                (e.g., JavaScript, React, Node.js)
               </p>
             </div>
 
-            <div v-if="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+            <div
+              v-if="successMessage"
+              class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded"
+            >
               {{ successMessage }}
             </div>
 
             <div class="flex gap-4">
-              <button type="submit" class="btn-primary">
-                Post Job
-              </button>
+              <button type="submit" class="btn-primary">Post Job</button>
               <router-link to="/company/dashboard" class="btn-secondary">
                 Cancel
               </router-link>
