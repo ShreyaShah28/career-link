@@ -37,6 +37,23 @@
       "companyName": "Finance Solutions",
       "posted": "2026-03-12",
       "status": "active"
+    },
+    {
+      "id": "1773641245419",
+      "title": "Receptionist",
+      "type": "Full-time",
+      "location": "Bhavnagar",
+      "salary": "12,000 INR - 15,000INR",
+      "description": "Need to be able to communicate with all clients on behalf of managers and prepare daily schedules as well a log for them daily.",
+      "requirements": "Communication skills and Management skills are a must.",
+      "keywords": [
+        "management",
+        "communication"
+      ],
+      "companyId": "1",
+      "companyName": "Tech Corp",
+      "posted": "2026-03-16",
+      "status": "active"
     }
   ],
   "users": [
@@ -136,6 +153,19 @@
       "coverLetter": "I really want this job.",
       "atsScore": 25,
       "appliedDate": "2026-03-13",
+      "status": "pending"
+    },
+    {
+      "id": "1773667763065",
+      "jobId": "1773641245419",
+      "jobTitle": "Receptionist",
+      "applicantId": "3",
+      "applicantName": "John Doe",
+      "applicantEmail": "seeker1@example.com",
+      "resume": "Bytefury LLP  Date: 16-01-2025  To  The Head  Department of Computer Science M K Bhavnagar University Bhavnagar  Subject: Joining Report for MCA Project Work (Jan-2026 to Apr-2026) Sir,  We are pleased to inform you that, we have permitted following students of Department of Computer Science, M K Bhavnagar University to carry out their MCA project work:  -   Shreya Shah 5109240022  Details of the project are given below:  1.   Title of the project : CareerLink  2.   Project Guide : Yogesh Gohil  3.   Contact Number:   7016091727  4.   Email-id :   yogesh@bytefury.com  5.   Duration of the project work: Jan-2026 to Apr-2026  Tools, Technology and project definition is attached herewith in separate sheets.  Signature of the student:   Signature of the Guide:  Name of the student: Shreya Shah   Name of the Guide: Yogesh Gohil  Stamp of Company Tools, Technology and Project Definition  Project Title:  CareerLink – Recruitment Management System  Project Definition:  The Smart Placement & Internship Management System is a web-based recruitment platform designed to connect job seekers and recruiters through a single digital system. It enables applicants to create profiles and upload their resumes, while recruiters can post job or internship openings and review applications efficiently.  The system supports resume screening by providing an ATS-based score for applicants, helping them understand the strength of their resumes. Recruiters can use these ATS scores to sort and shortlist resumes quickly and effectively.  Tools & Technology Stack  Frontend  ●   Vue.js   – For building a reactive Single-Page Application user interface.  ●   Tailwind CSS   – For styling and responsive design.  Backend  ●   PHP   – Core language for server-side logic.  Development Tools  ●   Visual Studio Code   – Code editor for development.  ●   GitHub   – Version control system and code repository ",
+      "coverLetter": "I want to join and grow along with company",
+      "atsScore": 50,
+      "appliedDate": "2026-03-16",
       "status": "pending"
     }
   ],

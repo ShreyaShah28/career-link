@@ -1,40 +1,42 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useJobsStore } from '@/stores/jobs'
+import { extractTextFromPDF } from '@/utils/pdfExtractor'
 
 const jobsStore = useJobsStore()
 
 const selectedJobId = ref('')
+const selectedResumeType = ref('text')
 const resumeText = ref('')
 
 const availableJobs = computed(() => jobsStore.activeJobs)
 
 const selectedJob = computed(() => {
   if (!selectedJobId.value) return null
-  return jobsStore.getJobById(parseInt(selectedJobId.value))
+  return jobsStore.getJobById(selectedJobId.value)
 })
 
 const matchedKeywords = computed(() => {
   if (!selectedJob.value || !resumeText.value) return []
 
   const resumeLower = resumeText.value.toLowerCase()
-  return selectedJob.value.keywords.filter((keyword) =>
-    resumeLower.includes(keyword.toLowerCase())
-  )
+  const keywords = selectedJob.value.keywords || []
+  return keywords.filter((keyword) => resumeLower.includes(keyword.toLowerCase()))
 })
 
 const missingKeywords = computed(() => {
   if (!selectedJob.value) return []
 
-  return selectedJob.value.keywords.filter(
-    (keyword) => !matchedKeywords.value.includes(keyword)
-  )
+  const keywords = selectedJob.value.keywords || []
+
+  return keywords.filter((keyword) => !matchedKeywords.value.includes(keyword))
 })
 
 const atsScore = computed(() => {
   if (!selectedJob.value || !resumeText.value) return 0
 
-  const totalKeywords = selectedJob.value.keywords.length
+  const totalKeywords = selectedJob.value.keywords?.length || 0
+  if (totalKeywords === 0) return 0
   const matched = matchedKeywords.value.length
 
   return Math.round((matched / totalKeywords) * 100)
@@ -43,6 +45,25 @@ const atsScore = computed(() => {
 function checkATS() {
   // This function is called on input to trigger reactivity
   // The actual calculation happens in computed properties
+}
+
+async function handleResumeUpload(event) {
+  const file = event.target.files[0]
+
+  if (!file) return
+
+  if (file.type !== 'application/pdf') {
+    alert('Please upload a valid PDF file.')
+    return
+  }
+
+  try {
+    const text = await extractTextFromPDF(file)
+    resumeText.value = text
+  } catch (error) {
+    console.error(error)
+    alert('Failed to read PDF.')
+  }
 }
 
 function getScoreBgColor(score) {
@@ -79,6 +100,10 @@ function getScoreMessage(score) {
     return 'Your resume matches some requirements. Add more keywords from the job description.'
   return 'Your resume needs significant optimization. Focus on including relevant keywords from the job posting.'
 }
+
+watch(selectedResumeType, () => {
+  resumeText.value = ''
+})
 </script>
 
 <template>
@@ -99,7 +124,7 @@ function getScoreMessage(score) {
           <!-- Job Selection -->
           <div class="card">
             <h2 class="text-xl font-bold text-gray-900 mb-4">Select a Job</h2>
-            <select v-model="selectedJobId" class="input-field" @change="checkATS">
+            <select v-model="selectedJobId" class="input-field">
               <option value="">Choose a job to check against...</option>
               <option v-for="job in availableJobs" :key="job.id" :value="job.id">
                 {{ job.title }} - {{ job.companyName }}
@@ -110,7 +135,7 @@ function getScoreMessage(score) {
               <h3 class="font-semibold text-gray-900 mb-2">Required Keywords:</h3>
               <div class="flex flex-wrap gap-2">
                 <span
-                  v-for="keyword in selectedJob.keywords"
+                  v-for="keyword in selectedJob?.keywords || []"
                   :key="keyword"
                   class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-sm"
                 >
@@ -121,15 +146,32 @@ function getScoreMessage(score) {
           </div>
 
           <!-- Resume Input -->
-          <div class="card">
-            <h2 class="text-xl font-bold text-gray-900 mb-4">Your Resume</h2>
+          <div class="card flex flex-col gap-5">
+            <h2 class="text-xl font-bold text-gray-900">Your Resume</h2>
+
+            <select v-model="selectedResumeType" class="input-field">
+              <option value="text">Input Resume Text</option>
+              <option value="pdf">Upload Resume PDF</option>
+            </select>
+
+            <!-- TEXT INPUT -->
             <textarea
+              v-if="selectedResumeType === 'text'"
               v-model="resumeText"
               rows="12"
               class="input-field resize-none"
-              placeholder="Paste your resume text here or enter your skills and experience..."
-              @input="checkATS"
+              placeholder="Paste your resume text here..."
             ></textarea>
+
+            <!-- PDF INPUT -->
+            <input
+              v-if="selectedResumeType === 'pdf'"
+              type="file"
+              accept=".pdf"
+              class="input-field"
+              @change="handleResumeUpload"
+            />
+
             <p class="text-sm text-gray-500 mt-2">{{ resumeText.length }} characters</p>
           </div>
         </div>
@@ -185,14 +227,14 @@ function getScoreMessage(score) {
               </div>
 
               <p class="text-sm text-gray-600">
-                {{ matchedKeywords.length }} of {{ selectedJob.keywords.length }} keywords
-                matched
+                {{ matchedKeywords.length }} of
+                {{ selectedJob?.keywords?.length || 0 }} keywords matched
               </p>
             </div>
           </div>
 
           <!-- Keyword Breakdown -->
-          <div v-if="selectedJobId && resumeText" class="card">
+          <div v-if="selectedJob && resumeText" class="card">
             <h2 class="text-xl font-bold text-gray-900 mb-4">Keyword Analysis</h2>
 
             <div class="space-y-3">
@@ -234,7 +276,7 @@ function getScoreMessage(score) {
 
           <!-- Recommendations -->
           <div
-            v-if="selectedJobId && resumeText && atsScore < 80"
+            v-if="selectedJob && resumeText && atsScore < 80"
             class="card bg-yellow-50 border-2 border-yellow-200"
           >
             <h2 class="text-xl font-bold text-gray-900 mb-4">💡 Recommendations</h2>
@@ -267,7 +309,7 @@ function getScoreMessage(score) {
           </div>
 
           <div
-            v-if="selectedJobId && resumeText && atsScore >= 80"
+            v-if="selectedJob && resumeText && atsScore >= 80"
             class="card bg-green-50 border-2 border-green-200"
           >
             <h2 class="text-xl font-bold text-green-900 mb-2">🎉 Great Job!</h2>

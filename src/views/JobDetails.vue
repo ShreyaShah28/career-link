@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useJobsStore } from '@/stores/jobs'
 import { useApplicationsStore } from '@/stores/applications'
+import { extractTextFromPDF } from '@/utils/pdfExtractor'
 
 const route = useRoute()
 const router = useRouter()
@@ -15,6 +16,7 @@ const jobId = route.params.id
 const job = computed(() => jobsStore.getJobById(route.params.id))
 
 const showApplicationForm = ref(false)
+const selectedResumeType = ref('text')
 const applicationForm = ref({
   resume: '',
   coverLetter: '',
@@ -38,6 +40,10 @@ watch(
     }
   }
 )
+
+watch(selectedResumeType, () => {
+  applicationForm.value.resume = ''
+})
 
 function calculateATSScore(resume, keywords) {
   const resumeLower = resume.toLowerCase()
@@ -73,6 +79,27 @@ function handleSubmit() {
   alert('Application submitted successfully!')
   router.push('/my-applications')
 }
+
+async function handleResumeUpload(event) {
+  const file = event.target.files[0]
+
+  if (!file) return
+
+  if (file.type !== 'application/pdf') {
+    alert('Please upload a valid PDF file.')
+    return
+  }
+
+  try {
+    const text = await extractTextFromPDF(file)
+    applicationForm.value.resume = text
+  } catch (error) {
+    console.error(error)
+    alert('Failed to read PDF.')
+  }
+  console.log(applicationForm.value.resume)
+}
+
 console.log(job)
 </script>
 
@@ -202,12 +229,28 @@ console.log(job)
       <h2 class="text-2xl font-bold text-gray-900 mb-6">Apply for {{ job?.title }}</h2>
 
       <form @submit.prevent="handleSubmit" class="space-y-6">
-        <div>
-          <label for="resume" class="block text-sm font-medium text-gray-700 mb-2">
+        <div class="flex flex-col gap-5">
+          <label for="resume" class="block text-sm font-medium text-gray-700">
             Resume / Profile Summary *
           </label>
+
+          <select v-model="selectedResumeType" class="input-field">
+            <option value="text">Input Resume Text</option>
+            <option value="pdf">Upload Resume PDF</option>
+          </select>
+
+          <!-- PDF INPUT -->
+          <input
+            v-if="selectedResumeType === 'pdf'"
+            type="file"
+            accept=".pdf"
+            class="input-field"
+            @change="handleResumeUpload"
+          />
+
           <textarea
             v-model="applicationForm.resume"
+            v-if="selectedResumeType === 'text'"
             id="resume"
             required
             rows="6"
