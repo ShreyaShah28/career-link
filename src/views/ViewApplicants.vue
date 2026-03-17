@@ -9,7 +9,7 @@ const route = useRoute()
 const jobsStore = useJobsStore()
 const applicationsStore = useApplicationsStore()
 
-const jobId = parseInt(route.params.jobId)
+const jobId = route.params.jobId
 const job = computed(() => jobsStore.getJobById(jobId))
 
 const applicants = computed(() => {
@@ -130,7 +130,7 @@ function getScoreColor(score) {
             <div class="mb-4">
               <h4 class="font-semibold text-gray-900 mb-2">Resume / Profile</h4>
               <p class="text-gray-700 text-sm bg-gray-50 p-4 rounded">
-                {{ application.resume }}
+                {{ application.resumeText }}
               </p>
             </div>
 

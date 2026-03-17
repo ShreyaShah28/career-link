@@ -1,31 +1,49 @@
-<script setup>
+<script setup lang="ts">
 import { ref, reactive } from 'vue'
+import { api } from '../services/api'
 
 const form = reactive({
   firstName: '',
   lastName: '',
   email: '',
   subject: '',
-  message: ''
+  message: '',
 })
 
 const submitMessage = ref('')
 const submitSuccess = ref(false)
 
-function handleSubmit() {
-  // Simulate form submission
-  submitSuccess.value = true
-  submitMessage.value = 'Thank you for contacting us! We will get back to you soon.'
-  
-  // Reset form
-  //setTimeout(() => {
+async function handleSubmit() {
+  submitMessage.value = ''
+  submitSuccess.value = false
+
+  const newRequest = {
+    id: Date.now().toString(),
+    firstName: form.firstName,
+    lastName: form.lastName,
+    email: form.email,
+    subject: form.subject,
+    message: form.message,
+    status: 'pending',
+  }
+
+  try {
+    await api.post('/contactRequests', newRequest)
+
+    submitSuccess.value = true
+    submitMessage.value = 'Thank you for contacting us! We will get back to you soon.'
+
+    // Reset form
     form.firstName = ''
     form.lastName = ''
     form.email = ''
     form.subject = ''
     form.message = ''
-    submitMessage.value = ''
-  //}, 3000)
+  } catch (error) {
+    console.error(error)
+    submitSuccess.value = false
+    submitMessage.value = 'Something went wrong. Please try again.'
+  }
 }
 </script>
 
@@ -35,7 +53,8 @@ function handleSubmit() {
       <div class="bg-white rounded-lg shadow-md p-8">
         <h1 class="text-4xl font-bold text-gray-900 mb-6">Contact Us</h1>
         <p class="text-lg text-gray-700 mb-8">
-          Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+          Have questions? We'd love to hear from you. Send us a message and we'll respond
+          as soon as possible.
         </p>
 
         <form @submit.prevent="handleSubmit" class="space-y-6">
@@ -111,7 +130,13 @@ function handleSubmit() {
             ></textarea>
           </div>
 
-          <div v-if="submitMessage" class="p-4 rounded-lg" :class="submitSuccess ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+          <div
+            v-if="submitMessage"
+            class="p-4 rounded-lg"
+            :class="
+              submitSuccess ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+            "
+          >
             {{ submitMessage }}
           </div>
 
@@ -127,8 +152,18 @@ function handleSubmit() {
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="flex items-start">
               <div class="flex-shrink-0">
-                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <svg
+                  class="w-6 h-6 text-primary-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
                 </svg>
               </div>
               <div class="ml-3">
@@ -139,8 +174,18 @@ function handleSubmit() {
 
             <div class="flex items-start">
               <div class="flex-shrink-0">
-                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                <svg
+                  class="w-6 h-6 text-primary-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
                 </svg>
               </div>
               <div class="ml-3">
@@ -151,14 +196,31 @@ function handleSubmit() {
 
             <div class="flex items-start">
               <div class="flex-shrink-0">
-                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                <svg
+                  class="w-6 h-6 text-primary-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
                 </svg>
               </div>
               <div class="ml-3">
                 <h3 class="text-lg font-semibold text-gray-900">Office</h3>
-                <p class="text-gray-600">123 Business St, Suite 100<br>San Francisco, CA 94105</p>
+                <p class="text-gray-600">
+                  123 Business St, Suite 100<br />San Francisco, CA 94105
+                </p>
               </div>
             </div>
           </div>

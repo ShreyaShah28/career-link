@@ -110,7 +110,8 @@
       "applicantId": "3",
       "applicantName": "John Doe",
       "applicantEmail": "seeker1@example.com",
-      "resume": "I know vue.js tailwind css and html ",
+      "resumeType": "text",
+      "resumeText": "I know vue.js tailwind css and html ",
       "coverLetter": "i have worked as mentor for 2 new interns and now i want to try being head and helping everyone out, as well be a guide and medium of understanding work to them.",
       "atsScore": 75,
       "appliedDate": "2026-03-12",
@@ -123,11 +124,12 @@
       "applicantId": "3",
       "applicantName": "John Doe",
       "applicantEmail": "seeker1@example.com",
-      "resume": "I know javascript, html and basic pinia",
+      "resumeType": "text",
+      "resumeText": "I know javascript, html and basic pinia",
       "coverLetter": "I am waiting to gain this amazing experience",
       "atsScore": 75,
       "appliedDate": "2026-03-13",
-      "status": "pending"
+      "status": "accepted"
     },
     {
       "id": "1773406970551",
@@ -136,11 +138,12 @@
       "applicantId": "4",
       "applicantName": "Jane Smith",
       "applicantEmail": "seeker2@example.com",
-      "resume": "I have learnt about Pinia store",
+      "resumeType": "text",
+      "resumeText": "I have learnt about Pinia store",
       "coverLetter": "I want to join you and grow together",
       "atsScore": 25,
       "appliedDate": "2026-03-13",
-      "status": "pending"
+      "status": "rejected"
     },
     {
       "id": "1773408882922",
@@ -149,7 +152,8 @@
       "applicantId": "4",
       "applicantName": "Jane Smith",
       "applicantEmail": "seeker2@example.com",
-      "resume": "Pinia store is my speciality",
+      "resumeType": "text",
+      "resumeText": "Pinia store is my speciality",
       "coverLetter": "I really want this job.",
       "atsScore": 25,
       "appliedDate": "2026-03-13",
@@ -162,10 +166,46 @@
       "applicantId": "3",
       "applicantName": "John Doe",
       "applicantEmail": "seeker1@example.com",
-      "resume": "Bytefury LLP  Date: 16-01-2025  To  The Head  Department of Computer Science M K Bhavnagar University Bhavnagar  Subject: Joining Report for MCA Project Work (Jan-2026 to Apr-2026) Sir,  We are pleased to inform you that, we have permitted following students of Department of Computer Science, M K Bhavnagar University to carry out their MCA project work:  -   Shreya Shah 5109240022  Details of the project are given below:  1.   Title of the project : CareerLink  2.   Project Guide : Yogesh Gohil  3.   Contact Number:   7016091727  4.   Email-id :   yogesh@bytefury.com  5.   Duration of the project work: Jan-2026 to Apr-2026  Tools, Technology and project definition is attached herewith in separate sheets.  Signature of the student:   Signature of the Guide:  Name of the student: Shreya Shah   Name of the Guide: Yogesh Gohil  Stamp of Company Tools, Technology and Project Definition  Project Title:  CareerLink – Recruitment Management System  Project Definition:  The Smart Placement & Internship Management System is a web-based recruitment platform designed to connect job seekers and recruiters through a single digital system. It enables applicants to create profiles and upload their resumes, while recruiters can post job or internship openings and review applications efficiently.  The system supports resume screening by providing an ATS-based score for applicants, helping them understand the strength of their resumes. Recruiters can use these ATS scores to sort and shortlist resumes quickly and effectively.  Tools & Technology Stack  Frontend  ●   Vue.js   – For building a reactive Single-Page Application user interface.  ●   Tailwind CSS   – For styling and responsive design.  Backend  ●   PHP   – Core language for server-side logic.  Development Tools  ●   Visual Studio Code   – Code editor for development.  ●   GitHub   – Version control system and code repository ",
+      "resumeType": "text",
+      "resumeText": "Bytefury LLP  Date: 16-01-2025  To  The Head  Department of Computer Science M K Bhavnagar University Bhavnagar  Subject: Joining Report for MCA Project Work (Jan-2026 to Apr-2026) Sir,  We are pleased to inform you that, we have permitted following students of Department of Computer Science, M K Bhavnagar University to carry out their MCA project work:  -   Shreya Shah 5109240022  Details of the project are given below:  1.   Title of the project : CareerLink  2.   Project Guide : Yogesh Gohil  3.   Contact Number:   7016091727  4.   Email-id :   yogesh@bytefury.com  5.   Duration of the project work: Jan-2026 to Apr-2026  Tools, Technology and project definition is attached herewith in separate sheets.  Signature of the student:   Signature of the Guide:  Name of the student: Shreya Shah   Name of the Guide: Yogesh Gohil  Stamp of Company Tools, Technology and Project Definition  Project Title:  CareerLink – Recruitment Management System  Project Definition:  The Smart Placement & Internship Management System is a web-based recruitment platform designed to connect job seekers and recruiters through a single digital system. It enables applicants to create profiles and upload their resumes, while recruiters can post job or internship openings and review applications efficiently.  The system supports resume screening by providing an ATS-based score for applicants, helping them understand the strength of their resumes. Recruiters can use these ATS scores to sort and shortlist resumes quickly and effectively.  Tools & Technology Stack  Frontend  ●   Vue.js   – For building a reactive Single-Page Application user interface.  ●   Tailwind CSS   – For styling and responsive design.  Backend  ●   PHP   – Core language for server-side logic.  Development Tools  ●   Visual Studio Code   – Code editor for development.  ●   GitHub   – Version control system and code repository ",
       "coverLetter": "I want to join and grow along with company",
       "atsScore": 50,
       "appliedDate": "2026-03-16",
+      "status": "pending"
+    },
+    {
+      "id": "1773733727602",
+      "jobId": "1773641245419",
+      "jobTitle": "Receptionist",
+      "applicantId": "4",
+      "applicantName": "Jane Smith",
+      "applicantEmail": "seeker2@example.com",
+      "resumeType": "pdf",
+      "coverLetter": "I want to work with you and grow\n",
+      "atsScore": 50,
+      "resumeText": "Bytefury LLP  Date: 16-01-2025  To  The Head  Department of Computer Science M K Bhavnagar University Bhavnagar  Subject: Joining Report for MCA Project Work (Jan-2026 to Apr-2026) Sir,  We are pleased to inform you that, we have permitted following students of Department of Computer Science, M K Bhavnagar University to carry out their MCA project work:  -   Shreya Shah 5109240022  Details of the project are given below:  1.   Title of the project : CareerLink  2.   Project Guide : Yogesh Gohil  3.   Contact Number:   7016091727  4.   Email-id :   yogesh@bytefury.com  5.   Duration of the project work: Jan-2026 to Apr-2026  Tools, Technology and project definition is attached herewith in separate sheets.  Signature of the student:   Signature of the Guide:  Name of the student: Shreya Shah   Name of the Guide: Yogesh Gohil  Stamp of Company Tools, Technology and Project Definition  Project Title:  CareerLink – Recruitment Management System  Project Definition:  The Smart Placement & Internship Management System is a web-based recruitment platform designed to connect job seekers and recruiters through a single digital system. It enables applicants to create profiles and upload their resumes, while recruiters can post job or internship openings and review applications efficiently.  The system supports resume screening by providing an ATS-based score for applicants, helping them understand the strength of their resumes. Recruiters can use these ATS scores to sort and shortlist resumes quickly and effectively.  Tools & Technology Stack  Frontend  ●   Vue.js   – For building a reactive Single-Page Application user interface.  ●   Tailwind CSS   – For styling and responsive design.  Backend  ●   PHP   – Core language for server-side logic.  Development Tools  ●   Visual Studio Code   – Code editor for development.  ●   GitHub   – Version control system and code repository ",
+      "resumeUrl": "/files/Shreya Doc.pdf",
+      "appliedDate": "2026-03-17",
+      "status": "pending"
+    }
+  ],
+  "contactRequests": [
+    {
+      "id": "1773745081055",
+      "firstName": "Shreya",
+      "lastName": "Shah",
+      "email": "shrika2@example.com",
+      "subject": "help me sign in",
+      "message": "please send me steps to sign in",
+      "status": "pending"
+    },
+    {
+      "id": "1773745232023",
+      "firstName": "shrika",
+      "lastName": "lee",
+      "email": "shrika2@example.com",
+      "subject": "help me sign in",
+      "message": "please help me sign in",
       "status": "pending"
     }
   ],

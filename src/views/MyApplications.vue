@@ -173,15 +173,15 @@ function getScoreBgColor(score) {
             <!-- Resume Summary -->
             <div class="mb-4">
               <h4 class="font-semibold text-gray-900 mb-2 text-sm">Your Resume:</h4>
-              <p class="text-gray-700 text-sm bg-gray-50 p-3 rounded line-clamp-3">
-                {{ application.resume }}
+              <p class="text-gray-700 text-sm bg-gray-50 p-3 rounded line-clamp-1">
+                {{ application.resumeText }}
               </p>
             </div>
 
             <!-- Cover Letter Summary -->
             <div class="mb-4">
               <h4 class="font-semibold text-gray-900 mb-2 text-sm">Your Cover Letter:</h4>
-              <p class="text-gray-700 text-sm bg-gray-50 p-3 rounded line-clamp-2">
+              <p class="text-gray-700 text-sm bg-gray-50 p-3 rounded line-clamp-1">
                 {{ application.coverLetter }}
               </p>
             </div>

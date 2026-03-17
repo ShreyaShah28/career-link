@@ -8,7 +8,11 @@ interface Application {
   applicantId: string
   applicantName: string
   applicantEmail: string
-  resume: string
+
+  resumeType: 'text' | 'pdf'
+  resumeText?: string
+  resumeUrl?: string   // for PDF
+
   coverLetter: string
   appliedDate: string
   status: string
@@ -55,7 +59,7 @@ export const useApplicationsStore = defineStore('application', {
       return this.applications.filter(app => app.applicantId === applicantId)
     },
 
-    hasApplied(jobId: string, applicantId: string): boolean {
+    hasApplied(jobId: any, applicantId: any): boolean {
       return this.applications.some(
         app => app.jobId === jobId && app.applicantId === applicantId
       )

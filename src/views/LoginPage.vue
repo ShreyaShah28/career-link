@@ -11,13 +11,18 @@ const email = ref('')
 const password = ref('')
 const error = ref('')
 
-function handleLogin() {
+async function handleLogin() {
   error.value = ''
   
-  const result = authStore.login(email.value, password.value)
-  
+  const result = await authStore.login(email.value, password.value)
+
+  console.log(result)
+
   if (result.success) {
-    const redirect = route.query.redirect || (authStore.isCompany ? '/company/dashboard' : '/jobseeker/dashboard')
+    const redirect =
+      route.query.redirect ||
+      (authStore.isCompany ? '/company/dashboard' : '/jobseeker/dashboard')
+
     router.push(redirect)
   } else {
     error.value = result.error

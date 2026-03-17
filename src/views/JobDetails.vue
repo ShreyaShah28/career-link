@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
-import { useJobsStore } from '@/stores/jobs'
-import { useApplicationsStore } from '@/stores/applications'
-import { extractTextFromPDF } from '@/utils/pdfExtractor'
+import { useAuthStore } from '../stores/auth'
+import { useJobsStore } from '../stores/jobs'
+import { useApplicationsStore } from '../stores/applications'
+import { extractTextFromPDF } from '../utils/pdfExtractor'
 
 const route = useRoute()
 const router = useRouter()
@@ -13,25 +13,26 @@ const jobsStore = useJobsStore()
 const applicationsStore = useApplicationsStore()
 
 const jobId = route.params.id
-const job = computed(() => jobsStore.getJobById(route.params.id))
+const job = computed(() => jobsStore.getJobById(route.params.id as string))
 
 const showApplicationForm = ref(false)
 const selectedResumeType = ref('text')
 const applicationForm = ref({
-  resume: '',
+  resumeText: '',
+  resumeFile: null as File | null,
   coverLetter: '',
 })
 
-const atsScore = ref(null)
+const atsScore = ref<number | null>(null)
 
 const hasApplied = computed(() => {
   if (!authStore.isAuthenticated || !authStore.isJobSeeker) return false
-  return applicationsStore.hasApplied(jobId, authStore.currentUser.id)
+  return applicationsStore.hasApplied(jobId, authStore?.currentUser?.id)
 })
 
 // Calculate ATS score when resume changes
 watch(
-  () => applicationForm.value.resume,
+  () => applicationForm.value.resumeText,
   (newResume) => {
     if (newResume && job.value) {
       atsScore.value = calculateATSScore(newResume, job.value.keywords)
@@ -42,34 +43,48 @@ watch(
 )
 
 watch(selectedResumeType, () => {
-  applicationForm.value.resume = ''
+  applicationForm.value.resumeText = ''
+  applicationForm.value.resumeFile = null
 })
 
-function calculateATSScore(resume, keywords) {
+function calculateATSScore(resume: string, keywords: string[]) {
   const resumeLower = resume.toLowerCase()
-  const matches = keywords.filter((keyword) =>
+  const matches = keywords.filter((keyword: string) =>
     resumeLower.includes(keyword.toLowerCase())
   ).length
 
   return Math.round((matches / keywords.length) * 100)
 }
 
-function getScoreColor(score) {
+function getScoreColor(score: number) {
   if (score >= 80) return 'text-green-600'
   if (score >= 60) return 'text-yellow-600'
   return 'text-red-600'
 }
 
 function handleSubmit() {
-  const applicationData = {
+  const applicationData: any = {
     jobId: route.params.id,
-    jobTitle: job.value.title,
-    applicantId: authStore.currentUser.id,
-    applicantName: authStore.currentUser.name,
-    applicantEmail: authStore.currentUser.email,
-    resume: applicationForm.value.resume,
+    jobTitle: job.value?.title,
+    applicantId: authStore?.currentUser?.id,
+    applicantName: authStore?.currentUser?.name,
+    applicantEmail: authStore?.currentUser?.email,
+    resumeType: selectedResumeType.value,
     coverLetter: applicationForm.value.coverLetter,
     atsScore: atsScore.value,
+  }
+
+  applicationData.resumeText = applicationForm.value.resumeText
+  if (selectedResumeType.value !== 'text') {
+    const file = applicationForm.value.resumeFile
+
+    if (!file) {
+      alert('Please upload a PDF resume.')
+      return
+    }
+
+    // ⚠️ json-server limitation → just store file name/path
+    applicationData.resumeUrl = `/files/${file.name}`
   }
 
   applicationsStore.submitApplication(applicationData)
@@ -80,7 +95,7 @@ function handleSubmit() {
   router.push('/my-applications')
 }
 
-async function handleResumeUpload(event) {
+async function handleResumeUpload(event: any) {
   const file = event.target.files[0]
 
   if (!file) return
@@ -90,14 +105,16 @@ async function handleResumeUpload(event) {
     return
   }
 
+  applicationForm.value.resumeFile = file
+
   try {
     const text = await extractTextFromPDF(file)
-    applicationForm.value.resume = text
+    applicationForm.value.resumeText = text
   } catch (error) {
     console.error(error)
     alert('Failed to read PDF.')
   }
-  console.log(applicationForm.value.resume)
+  console.log(applicationForm.value.resumeText)
 }
 
 console.log(job)
@@ -249,7 +266,7 @@ console.log(job)
           />
 
           <textarea
-            v-model="applicationForm.resume"
+            v-model="applicationForm.resumeText"
             v-if="selectedResumeType === 'text'"
             id="resume"
             required
