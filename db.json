@@ -54,6 +54,106 @@
       "companyName": "Tech Corp",
       "posted": "2026-03-16",
       "status": "active"
+    },
+    {
+      "id": "1774300001001",
+      "title": "Frontend Developer",
+      "type": "Full-time",
+      "location": "Remote",
+      "salary": "8,00,000 INR - 12,00,000 INR",
+      "description": "Build responsive user interfaces for our hiring platform using Vue.js and Tailwind CSS. You will collaborate closely with design and backend teams to ship polished product features.",
+      "requirements": "2+ years of frontend development experience, strong JavaScript fundamentals, and experience building production web applications.",
+      "keywords": [
+        "Vue.js",
+        "JavaScript",
+        "Tailwind CSS",
+        "REST APIs",
+        "Responsive Design"
+      ],
+      "companyId": "1",
+      "companyName": "Tech Corp",
+      "posted": "2026-05-02",
+      "status": "active"
+    },
+    {
+      "id": "1774300001002",
+      "title": "Backend Developer",
+      "type": "Full-time",
+      "location": "Ahmedabad",
+      "salary": "9,00,000 INR - 14,00,000 INR",
+      "description": "Design and maintain scalable backend services, APIs, and database workflows for a growing recruitment product. The role involves improving system performance and collaborating with frontend developers on feature delivery.",
+      "requirements": "Experience with Node.js or PHP, database design, API development, and debugging production issues.",
+      "keywords": [
+        "Node.js",
+        "PHP",
+        "MySQL",
+        "API Development",
+        "Debugging"
+      ],
+      "companyId": "2",
+      "companyName": "Finance Solutions",
+      "posted": "2026-05-04",
+      "status": "active"
+    },
+    {
+      "id": "1774300001003",
+      "title": "UI/UX Designer",
+      "type": "Contract",
+      "location": "Mumbai",
+      "salary": "6,00,000 INR - 9,00,000 INR",
+      "description": "Create user flows, wireframes, and high-fidelity interfaces for candidate and recruiter experiences. You will help improve usability across dashboards, job applications, and ATS tooling.",
+      "requirements": "Portfolio demonstrating web app design, proficiency in Figma, and a solid grasp of accessibility and information architecture.",
+      "keywords": [
+        "Figma",
+        "Wireframing",
+        "Prototyping",
+        "Accessibility",
+        "User Research"
+      ],
+      "companyId": "1",
+      "companyName": "Tech Corp",
+      "posted": "2026-05-06",
+      "status": "active"
+    },
+    {
+      "id": "1774300001004",
+      "title": "Data Analyst Intern",
+      "type": "Internship",
+      "location": "Pune",
+      "salary": "20,000 INR - 30,000 INR",
+      "description": "Support reporting on recruiter engagement, application conversion, and ATS score patterns. This internship is a good fit for someone who enjoys cleaning data and presenting insights clearly.",
+      "requirements": "Basic SQL knowledge, comfort with spreadsheets, and strong analytical thinking. Python experience is a plus.",
+      "keywords": [
+        "SQL",
+        "Excel",
+        "Python",
+        "Data Visualization",
+        "Analytics"
+      ],
+      "companyId": "2",
+      "companyName": "Finance Solutions",
+      "posted": "2026-05-08",
+      "status": "active"
+    },
+    {
+      "id": "1774300001005",
+      "title": "DevOps Engineer",
+      "type": "Full-time",
+      "location": "Bengaluru",
+      "salary": "12,00,000 INR - 18,00,000 INR",
+      "description": "Improve deployment pipelines, monitoring, and cloud infrastructure for our internal and customer-facing systems. You will work on automation, uptime, and release confidence across the team.",
+      "requirements": "Hands-on experience with CI/CD, Docker, cloud platforms, and infrastructure troubleshooting.",
+      "keywords": [
+        "Docker",
+        "CI/CD",
+        "AWS",
+        "Monitoring",
+        "Automation"
+      ],
+      "companyId": "1",
+      "companyName": "Tech Corp",
+      "posted": "2026-05-10",
+      "status": "active"
     }
   ],
   "users": [
